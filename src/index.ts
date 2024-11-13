@@ -1,11 +1,8 @@
 import express from 'express';
 import { WebSocket } from 'ws';
-import { 
-  response
-} from './utils/types';  
+import { response } from './utils/types';
 
-
-import { generateRandomData,sensorTypes } from './utils/helper';
+import { generateRandomData, sensorTypes, Tables } from './utils/helper';
 
 const app = express();
 const PORT = 3001;
@@ -22,11 +19,11 @@ ws.on('open', () => {
     setInterval(() => {
       const data = generateRandomData(sensorTypes[i], 10);
       const response: response = {
-        type:sensorTypes[i],
-        Table:  sensorTypes[i],
+        type: 'sync_data',
+        Table: Tables[i],
         offset: Math.floor(Math.random() * 100),
         data: data,
-      }
+      };
       ws.send(JSON.stringify(response));
     }, 1000);
   }
