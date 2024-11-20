@@ -59,6 +59,7 @@ export function generateRandomData(
       config: 'default',
       frequency: 100,
       createdAt: generateRandomDate(),
+  
     };
 
     let sensorData;
