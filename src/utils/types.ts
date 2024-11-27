@@ -10,7 +10,7 @@ export interface temSensor {
 }
 
 export interface gluSensor {
-  humidity: number;
+  glucose: number;
   time: string;
 }
 

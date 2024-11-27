@@ -7,10 +7,19 @@ import {
 } from './types';
 
 function generateRandomDate(): string {
-  return new Date(
-    Date.now() - Math.floor(Math.random() * 1000000000)
-  ).toISOString();
+  // Ensure the generated date is always in the past and is valid
+  const randomMilliseconds = Math.floor(Math.random() * 1000000000); // Random number of milliseconds
+  const generatedDate = new Date(Date.now() - randomMilliseconds);
+
+  // If the generated date is invalid, log an error or adjust it
+  if (isNaN(generatedDate.getTime())) {
+    console.error("Generated an invalid date, using the current date instead.");
+    return new Date().toISOString(); // Default to current date if invalid
+  }
+
+  return generatedDate.toISOString();
 }
+
 
 function generateBioSensorData(): bioSensor[] {
   return Array.from({ length: 100 }, () => ({
@@ -29,7 +38,7 @@ function generateTemSensorData(): temSensor[] {
 
 function generateGluSensorData(): gluSensor[] {
   return Array.from({ length: 100 }, () => ({
-    humidity: parseFloat((Math.random() * 100).toFixed(2)),
+    glucose: parseFloat((Math.random() * 100).toFixed(2)),
     time: generateRandomDate(),
   }));
 }

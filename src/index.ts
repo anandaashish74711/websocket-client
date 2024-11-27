@@ -17,8 +17,14 @@ ws.on('open', () => {
   
   // Start sending random data for each sensor type
   sensorTypes.forEach((sensorType, i) => {
+    let count = 0; // Initialize a count to track the number of batches sent
     const intervalId = setInterval(() => {
-      const data = generateRandomData(sensorType, 10);
+      if (count >= 10) {
+        clearInterval(intervalId); // Stop after sending 10 batches
+        return;
+      }
+
+      const data = generateRandomData(sensorType, 10); // Generate 10 values at once
       const response: response = {
         type: 'sync_data',
         Table: Tables[i],
@@ -26,9 +32,11 @@ ws.on('open', () => {
         data: data,
       };
       ws.send(JSON.stringify(response));
-    }, 1000);
 
-    // Save the interval ID so we can clear it later if necessary
+      count++; // Increment the count
+    }, 10000); // 2-second delay for each batch of 10 values
+
+    // Clear the interval when WebSocket connection is closed
     ws.on('close', () => {
       clearInterval(intervalId); // Clear the interval when WebSocket closes
     });
