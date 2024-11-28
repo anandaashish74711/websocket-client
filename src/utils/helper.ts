@@ -6,20 +6,17 @@ import {
   clientFormat,
 } from './types';
 
-function generateRandomDate(): string {
-  // Ensure the generated date is always in the past and is valid
+function generateRandomDate(): Date {
   const randomMilliseconds = Math.floor(Math.random() * 1000000000); // Random number of milliseconds
   const generatedDate = new Date(Date.now() - randomMilliseconds);
 
-  // If the generated date is invalid, log an error or adjust it
   if (isNaN(generatedDate.getTime())) {
     console.error("Generated an invalid date, using the current date instead.");
-    return new Date().toISOString(); // Default to current date if invalid
+    return new Date(); // Default to current date if invalid
   }
 
-  return generatedDate.toISOString();
+  return generatedDate;
 }
-
 
 function generateBioSensorData(): bioSensor[] {
   return Array.from({ length: 100 }, () => ({
@@ -63,12 +60,11 @@ export function generateRandomData(
         | 'temSensor'
         | 'gluSensor'
         | 'gsrSensor',
-      time: generateRandomDate(),
+      time: new Date(),
       visit_id: '1234',
       config: 'default',
       frequency: 100,
-      createdAt: generateRandomDate(),
-  
+      createdAt: new Date(), // Use current date and time
     };
 
     let sensorData;
@@ -95,6 +91,9 @@ export function generateRandomData(
 
   return data;
 }
+
+
+
 
 export const sensorTypes = ['bioSensor', 'temSensor', 'gluSensor', 'gsrSensor'];
 export const Tables = [

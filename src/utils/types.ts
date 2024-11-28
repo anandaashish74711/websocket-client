@@ -1,31 +1,31 @@
 export interface bioSensor {
   bioImpedance: number;
   phaseAngle: number;
-  time: string;
+  time: Date;
 }
 
 export interface temSensor {
   temperature: number;
-  time: string;
+  time: Date;
 }
 
 export interface gluSensor {
   glucose: number;
-  time: string;
+  time: Date;
 }
 
 export interface gsrSensor {
   gsr: number;
-  time: string;
+  time: Date;
 }
 
 export interface clientFormat {
   sensorType: 'bioSensor' | 'temSensor' | 'gluSensor' | 'gsrSensor';
-  time: string;
+  time: Date;
   visit_id: string;
   config: string;
   frequency: number;
-  createdAt: string;
+  createdAt: Date;
   data: bioSensor[] | temSensor[] | gluSensor[] | gsrSensor[];
 }
 
