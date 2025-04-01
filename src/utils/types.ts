@@ -31,7 +31,7 @@ export interface clientFormat {
 
 export interface response {
   type: string;
-  Table: string;
+  table: string;
   offset: number;
   data: clientFormat[];
 }
